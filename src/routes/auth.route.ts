@@ -1,4 +1,5 @@
 import express from "express";
+import config from "../config/jwt.config";
 import {
   insertNewUser,
   setRefreshToken,
@@ -14,7 +15,7 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
   const result = await insertNewUser(req.body.email, req.body.password);
-  if (result?.severity === "ERROR")
+  if (result?.severity === "ERROR") {
     res.json({
       userCreated: false,
       email: req.body.email,
@@ -22,12 +23,15 @@ router.post("/signup", async (req, res) => {
       code: result?.code,
       detail: result?.detail,
     });
-  else
+  }
+  //Error occurs if the user is already created
+  else {
     res.json({
       userCreated: true,
       email: req.body.email,
       rowCount: result?.rowCount,
     });
+  }
 });
 
 router.post("/login", async (req, res) => {
@@ -40,21 +44,22 @@ router.post("/login", async (req, res) => {
     const accessToken = generateAccessToken(req.body.email);
     const refreshToken = generateRefreshToken(req.body.email);
     setRefreshToken(req.body.email, refreshToken);
+
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + 10000),
+      expires: new Date(Date.now() + config.accessTokenTTL),
     });
-
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       path: "/auth/refresh",
-      expires: new Date(Date.now() + 60000),
+      expires: new Date(Date.now() + config.refreshTokenTTL),
     });
-
     res.json({
       authenticated: true,
     });
-  } else {
+  }
+  //Error occurs when user password is not valid
+  else {
     res.json({
       authenticated: false,
     });
@@ -71,7 +76,9 @@ router.post("/refresh", async (req, res) => {
     res.json({
       err: false,
     });
-  } else {
+  }
+  //Error occurs when validating the token
+  else {
     res.json({
       err: true,
     });

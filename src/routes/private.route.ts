@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.use(async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
-
   if (await verifyToken(accessToken, "access")) {
     next();
   }
-
+  //If access token is not verified.
+  res.statusCode = 401;
   res.json({
     err: true,
     errMessage: "User not authenticated",

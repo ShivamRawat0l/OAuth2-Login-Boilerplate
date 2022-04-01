@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import config from "../config/jwt.config";
 import { getUserRefreshToken } from "../controllers/psql.controller";
 import { JWTToken } from "../types/jwt.types";
 
@@ -28,7 +29,7 @@ function generateAccessToken(email: string) {
       email: email,
     },
     "access",
-    { expiresIn: "20s" }
+    { expiresIn: config.accessTokenTTL }
   );
   return accessToken;
 }
@@ -39,7 +40,7 @@ function generateRefreshToken(email: string) {
       email: email,
     },
     "refresh",
-    { expiresIn: "1m" }
+    { expiresIn: config.refreshTokenTTL }
   );
   return refreshToken;
 }
