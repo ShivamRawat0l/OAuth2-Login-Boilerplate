@@ -1,7 +1,7 @@
-import { Pool, QueryResult } from "pg";
-import config from "../config/psql.config";
-import { comparePassword, cryptPassword } from "../services/bcrypt.services";
-import { PSQLInfo, PSQLLogin } from "../types/psql.types";
+import {Pool, QueryResult} from 'pg';
+import config from '../config/psql.config';
+import {comparePassword, cryptPassword} from '../services/bcrypt.services';
+import {PSQLInfo, PSQLLogin} from '../types/psql.types';
 
 async function insertNewUser(email: string, password: string) {
   const pool = new Pool(config);
@@ -50,7 +50,7 @@ async function getUserByEmail(email: string) {
 }
 
 async function verifyUserLogin(email: string, password: string) {
-  const { rows } = await getUserByEmail(email);
+  const {rows} = await getUserByEmail(email);
   const isPasswordMatch = await comparePassword(password, rows[0].password);
   if (!isPasswordMatch) {
     return false;

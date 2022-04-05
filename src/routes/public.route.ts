@@ -1,10 +1,10 @@
-import express from 'express'
+import express from 'express';
 
-const router = express.Router(); 
+const router = express.Router();
 
-router.get('/list1',(req,res)=>{
-  res.send("LIST 1 IS ACCESSED"); 
-})
+router.get('/list1', (req, res)=>{
+  res.send('LIST 1 IS ACCESSED');
+});
 
 
-export default router; 
+export default router;

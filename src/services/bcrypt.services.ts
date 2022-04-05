@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from 'bcryptjs';
 
 const cryptPassword = async (password: any): Promise<string> => {
   const salt = await bcrypt.genSalt(10);
@@ -7,11 +7,11 @@ const cryptPassword = async (password: any): Promise<string> => {
 };
 
 const comparePassword = async (
-  plainPass: string,
-  hashword: string
+    plainPass: string,
+    hashword: string,
 ): Promise<boolean> => {
   const isPasswordMatch = await bcrypt.compareSync(plainPass, hashword);
   return isPasswordMatch;
 };
 
-export { cryptPassword, comparePassword };
+export {cryptPassword, comparePassword};

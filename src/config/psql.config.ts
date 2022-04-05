@@ -7,6 +7,6 @@ const config = {
   database: 'testing',
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
-}
+};
 
-export default config; 
+export default config;

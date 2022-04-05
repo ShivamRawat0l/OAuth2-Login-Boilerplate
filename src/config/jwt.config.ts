@@ -1,5 +1,6 @@
 const config = {
-  accessTokenTTL: 1000 * 60 * 60 * 2,
-  refreshTokenTTL: 1000 * 60 * 60 * 24 * 7 * 8,
+  accessTokenTTL: 1000 * 10,
+  refreshTokenTTL: 1000 * 30,
 };
+
 export default config;
